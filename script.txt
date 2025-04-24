@@ -1,0 +1,22 @@
+add
+Band1
+1.0
+2
+5
+Description
+2023-01-01
+ROCK
+Album1
+300
+update 1
+Band2
+2.0
+3
+10
+New Description
+2023-02-01
+POP
+Album2
+400
+show
+execute_script script.txt
