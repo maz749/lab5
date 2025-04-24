@@ -1,27 +1,14 @@
-/**
- * Команда для вывода элементов, значение поля numberOfParticipants которых равно заданному.
- */
 package commands;
 
-import manager.MusicBandManager;
+import manager.MusicBandCollection;
 
 public class FilterByNumberOfParticipantsCommand implements Command {
-    private MusicBandManager manager;
+    private MusicBandCollection collection;
 
-    /**
-     * Конструктор команды FilterByNumberOfParticipantsCommand.
-     *
-     * @param manager менеджер музыкальных групп
-     */
-    public FilterByNumberOfParticipantsCommand(MusicBandManager manager) {
-        this.manager = manager;
+    public FilterByNumberOfParticipantsCommand(MusicBandCollection collection) {
+        this.collection = collection;
     }
 
-    /**
-     * Выполняет команду фильтрации по количеству участников.
-     *
-     * @param argument количество участников для фильтрации
-     */
     @Override
     public void execute(String argument) {
         try {
@@ -30,8 +17,7 @@ public class FilterByNumberOfParticipantsCommand implements Command {
             }
             int numberOfParticipants = Integer.parseInt(argument);
             System.out.println("Группы с количеством участников " + numberOfParticipants + ":");
-            manager.getMusicBands().stream()
-                    .filter(band -> band.getNumberOfParticipants() == numberOfParticipants)
+            collection.filterByNumberOfParticipants(numberOfParticipants)
                     .forEach(System.out::println);
         } catch (NumberFormatException e) {
             System.out.println("Ошибка: Количество участников должно быть числом.");

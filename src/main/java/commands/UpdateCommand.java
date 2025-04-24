@@ -1,18 +1,19 @@
 package commands;
 
-import manager.MusicBandManager;
+import manager.MusicBandCollection;
 import models.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 public class UpdateCommand implements Command {
-    private MusicBandManager manager;
+    private MusicBandCollection collection;
 
-    public UpdateCommand(MusicBandManager manager) {
-        this.manager = manager;
+    public UpdateCommand(MusicBandCollection collection) {
+        this.collection = collection;
     }
 
     @Override
@@ -29,7 +30,7 @@ public class UpdateCommand implements Command {
 
         try {
             int id = Integer.parseInt(argument.trim());
-            MusicBand existingBand = manager.getMusicBandById(id);
+            MusicBand existingBand = collection.getMusicBandById(id);
             if (existingBand == null) {
                 System.out.println("Музыкальная группа с ID " + id + " не найдена.");
                 return;
@@ -95,10 +96,13 @@ public class UpdateCommand implements Command {
             Album bestAlbum = new Album(albumName, albumLength);
             MusicBand updatedBand = new MusicBand(name, coordinates, numberOfParticipants, description, establishmentDate, genre, bestAlbum);
 
-            manager.update(id, updatedBand);
+            collection.update(id, updatedBand);
             System.out.println("Музыкальная группа с ID " + id + " успешно обновлена: " + updatedBand);
         } catch (Exception e) {
             System.out.println("Ошибка при обновлении музыкальной группы: " + e.getMessage());
+            if (reader == null) {
+                System.out.println("Попробуйте снова.");
+            }
         }
     }
 
@@ -112,7 +116,7 @@ public class UpdateCommand implements Command {
             System.out.println(line);
             return line.trim();
         } else {
-            return new java.util.Scanner(System.in).nextLine().trim();
+            return new Scanner(System.in).nextLine().trim();
         }
     }
 }

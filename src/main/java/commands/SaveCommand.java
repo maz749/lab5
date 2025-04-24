@@ -1,16 +1,16 @@
 package commands;
 
-import manager.MusicBandManager;
+import manager.FileStorage;
 
 public class SaveCommand implements Command {
-    private MusicBandManager manager;
+    private FileStorage storage;
 
-    public SaveCommand(MusicBandManager manager) {
-        this.manager = manager;
+    public SaveCommand(FileStorage storage) {
+        this.storage = storage;
     }
 
     @Override
     public void execute(String argument) {
-        manager.saveToFile(null);
+        storage.saveToFile(null, null);
     }
 }

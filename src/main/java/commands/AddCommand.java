@@ -1,114 +1,180 @@
 package commands;
 
-import manager.MusicBandManager;
+import manager.MusicBandCollection;
 import models.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Scanner;
 
 /**
  * Команда для добавления новой музыкальной группы в коллекцию.
  */
 public class AddCommand implements Command {
-    private MusicBandManager manager;
+    private MusicBandCollection collection;
 
-    /**
-     * Конструктор команды AddCommand.
-     *
-     * @param manager менеджер музыкальных групп
-     */
-    public AddCommand(MusicBandManager manager) {
-        this.manager = manager;
+    public AddCommand(MusicBandCollection collection) {
+        this.collection = collection;
     }
 
-    /**
-     * Выполняет команду добавления новой музыкальной группы.
-     *
-     * @param argument аргумент команды (не используется)
-     */
     @Override
     public void execute(String argument) {
         execute(argument, null);
     }
 
-    /**
-     * Выполняет команду добавления новой музыкальной группы, используя указанный BufferedReader.
-     *
-     * @param argument аргумент команды (не используется)
-     * @param reader источник ввода данных
-     */
     @Override
     public void execute(String argument, BufferedReader reader) {
+        System.out.println("Введите данные для новой музыкальной группы:");
+
         try {
-            System.out.println("Введите данные для новой музыкальной группы:");
+            // Ввод имени группы
+            String name = readField("Имя группы: ", reader, input -> {
+                if (input.isEmpty()) {
+                    throw new IllegalArgumentException("Имя не может быть пустым.");
+                }
+                return input;
+            });
 
-            String name = readLine("Имя группы: ", reader);
-            if (name.isEmpty()) {
-                throw new IllegalArgumentException("Имя не может быть пустым.");
-            }
+            // Ввод координаты X
+            double x = readField("Координата X: ", reader, input -> {
+                if (input.isEmpty()) {
+                    throw new IllegalArgumentException("Координата X не может быть пустой.");
+                }
+                try {
+                    return Double.parseDouble(input);
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Координата X должна быть числом.");
+                }
+            });
 
-            String xInput = readLine("Координата X: ", reader);
-            if (xInput.isEmpty()) {
-                throw new IllegalArgumentException("Координата X не может быть пустой.");
-            }
-            double x = Double.parseDouble(xInput);
+            // Ввод координаты Y
+            int y = readField("Координата Y: ", reader, input -> {
+                if (input.isEmpty()) {
+                    throw new IllegalArgumentException("Координата Y не может быть пустой.");
+                }
+                try {
+                    return Integer.parseInt(input);
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Координата Y должна быть целым числом.");
+                }
+            });
 
-            String yInput = readLine("Координата Y: ", reader);
-            if (yInput.isEmpty()) {
-                throw new IllegalArgumentException("Координата Y не может быть пустой.");
-            }
-            int y = Integer.parseInt(yInput);
+            // Ввод количества участников
+            int numberOfParticipants = readField("Количество участников: ", reader, input -> {
+                if (input.isEmpty()) {
+                    throw new IllegalArgumentException("Количество участников не может быть пустым.");
+                }
+                try {
+                    int value = Integer.parseInt(input);
+                    if (value < 0) {
+                        throw new IllegalArgumentException("Количество участников не может быть отрицательным.");
+                    }
+                    return value;
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Количество участников должно быть целым числом.");
+                }
+            });
 
-            String participantsInput = readLine("Количество участников: ", reader);
-            if (participantsInput.isEmpty()) {
-                throw new IllegalArgumentException("Количество участников не может быть пустым.");
-            }
-            int numberOfParticipants = Integer.parseInt(participantsInput);
-            if (numberOfParticipants < 0) {
-                throw new IllegalArgumentException("Количество участников не может быть отрицательным.");
-            }
+            // Ввод описания
+            String description = readField("Описание (можно оставить пустым): ", reader, input -> input.isEmpty() ? null : input);
 
-            String description = readLine("Описание: ", reader);
+            // Ввод даты основания
+            Date establishmentDate = readField("Дата основания (гггг-мм-дд): ", reader, input -> {
+                if (input.isEmpty()) {
+                    throw new IllegalArgumentException("Дата основания не может быть пустой.");
+                }
+                try {
+                    return new SimpleDateFormat("yyyy-MM-dd").parse(input);
+                } catch (java.text.ParseException e) {
+                    throw new IllegalArgumentException("Некорректный формат даты. Используйте гггг-мм-дд.");
+                }
+            });
 
-            String dateStr = readLine("Дата основания (гггг-мм-дд): ", reader);
-            if (dateStr.isEmpty()) {
-                throw new IllegalArgumentException("Дата основания не может быть пустой.");
-            }
-            Date establishmentDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+            // Ввод жанра
+            MusicGenre genre = readField("Жанр (" + Arrays.toString(MusicGenre.values()) + "): ", reader, input -> {
+                if (input.isEmpty()) {
+                    throw new IllegalArgumentException("Жанр не может быть пустым.");
+                }
+                try {
+                    return MusicGenre.valueOf(input.toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    throw new IllegalArgumentException("Некорректный жанр. Доступные жанры: " + Arrays.toString(MusicGenre.values()));
+                }
+            });
 
-            String genreInput = readLine("Жанр (ROCK, PSYCHEDELIC_CLOUD_RAP, POP, POST_PUNK): ", reader);
-            if (genreInput.isEmpty()) {
-                throw new IllegalArgumentException("Жанр не может быть пустым.");
-            }
-            MusicGenre genre = MusicGenre.valueOf(genreInput.toUpperCase());
+            // Ввод названия альбома
+            String albumName = readField("Название лучшего альбома: ", reader, input -> {
+                if (input.isEmpty()) {
+                    throw new IllegalArgumentException("Название альбома не может быть пустым.");
+                }
+                return input;
+            });
 
-            String albumName = readLine("Название лучшего альбома: ", reader);
-            if (albumName.isEmpty()) {
-                throw new IllegalArgumentException("Название альбома не может быть пустым.");
-            }
+            // Ввод длины альбома
+            int albumLength = readField("Длина альбома (в секундах): ", reader, input -> {
+                if (input.isEmpty()) {
+                    throw new IllegalArgumentException("Длина альбома не может быть пустой.");
+                }
+                try {
+                    int value = Integer.parseInt(input);
+                    if (value <= 0) {
+                        throw new IllegalArgumentException("Длина альбома должна быть больше 0.");
+                    }
+                    return value;
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Длина альбома должна быть целым числом.");
+                }
+            });
 
-            String albumLengthInput = readLine("Длина альбома (в секундах): ", reader);
-            if (albumLengthInput.isEmpty()) {
-                throw new IllegalArgumentException("Длина альбома не может быть пустой.");
-            }
-            int albumLength = Integer.parseInt(albumLengthInput);
-            if (albumLength <= 0) {
-                throw new IllegalArgumentException("Длина альбома должна быть больше 0.");
-            }
-
+            // Создание объектов и добавление группы
             Coordinates coordinates = new Coordinates(x, y);
             Album bestAlbum = new Album(albumName, albumLength);
             MusicBand band = new MusicBand(name, coordinates, numberOfParticipants, description, establishmentDate, genre, bestAlbum);
 
-            manager.getMusicBands().add(band);
+            collection.add(band);
             System.out.println("Музыкальная группа добавлена: " + band);
+
         } catch (Exception e) {
             System.out.println("Ошибка при добавлении музыкальной группы: " + e.getMessage());
         }
     }
 
+    /**
+     * Универсальный метод для чтения поля с повторным вводом в случае ошибки.
+     *
+     * @param prompt Сообщение для пользователя.
+     * @param reader BufferedReader для чтения из скрипта, или null для интерактивного ввода.
+     * @param validator Функция валидации и преобразования ввода.
+     * @param <T> Тип возвращаемого значения.
+     * @return Валидированное значение поля.
+     * @throws IOException Если достигнут конец файла скрипта.
+     */
+    private <T> T readField(String prompt, BufferedReader reader, Validator<T> validator) throws IOException {
+        while (true) {
+            try {
+                String input = readLine(prompt, reader);
+                return validator.validate(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+                if (reader != null) {
+                    throw e; // В скрипте не повторяем ввод
+                }
+                System.out.println("Пожалуйста, введите данные заново для этого поля.");
+            }
+        }
+    }
+
+    /**
+     * Читает строку из ввода (интерактивного или скрипта).
+     *
+     * @param prompt Сообщение для пользователя.
+     * @param reader BufferedReader для чтения из скрипта, или null для интерактивного ввода.
+     * @return Введённая строка.
+     * @throws IOException Если достигнут конец файла скрипта.
+     */
     private String readLine(String prompt, BufferedReader reader) throws IOException {
         System.out.print(prompt);
         if (reader != null) {
@@ -119,7 +185,17 @@ public class AddCommand implements Command {
             System.out.println(line);
             return line.trim();
         } else {
-            return new java.util.Scanner(System.in).nextLine().trim();
+            return new Scanner(System.in).nextLine().trim();
         }
+    }
+
+    /**
+     * Интерфейс для валидации и преобразования ввода.
+     *
+     * @param <T> Тип возвращаемого значения.
+     */
+    @FunctionalInterface
+    private interface Validator<T> {
+        T validate(String input) throws IllegalArgumentException;
     }
 }

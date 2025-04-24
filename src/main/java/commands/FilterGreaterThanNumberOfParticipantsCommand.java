@@ -1,27 +1,14 @@
-/**
- * Команда для вывода элементов, значение поля numberOfParticipants которых больше заданного.
- */
 package commands;
 
-import manager.MusicBandManager;
+import manager.MusicBandCollection;
 
 public class FilterGreaterThanNumberOfParticipantsCommand implements Command {
-    private MusicBandManager manager;
+    private MusicBandCollection collection;
 
-    /**
-     * Конструктор команды FilterGreaterThanNumberOfParticipantsCommand.
-     *
-     * @param manager менеджер музыкальных групп
-     */
-    public FilterGreaterThanNumberOfParticipantsCommand(MusicBandManager manager) {
-        this.manager = manager;
+    public FilterGreaterThanNumberOfParticipantsCommand(MusicBandCollection collection) {
+        this.collection = collection;
     }
 
-    /**
-     * Выполняет команду фильтрации по количеству участников больше заданного.
-     *
-     * @param argument количество участников для фильтрации
-     */
     @Override
     public void execute(String argument) {
         try {
@@ -30,7 +17,7 @@ public class FilterGreaterThanNumberOfParticipantsCommand implements Command {
             }
             int numberOfParticipants = Integer.parseInt(argument);
             System.out.println("Группы с количеством участников больше " + numberOfParticipants + ":");
-            manager.getMusicBands().stream()
+            collection.getMusicBands().stream()
                     .filter(band -> band.getNumberOfParticipants() > numberOfParticipants)
                     .forEach(System.out::println);
         } catch (NumberFormatException e) {

@@ -1,8 +1,3 @@
-/**
- * Главный класс приложения для управления музыкальными группами.
- */
-
-
 import commands.*;
 import manager.MusicBandManager;
 import models.MusicBand;
@@ -10,11 +5,6 @@ import models.MusicBand;
 import java.util.Scanner;
 
 public class Main {
-    /**
-     * Точка входа в приложение.
-     *
-     * @param args аргументы командной строки (имя файла)
-     */
     public static void main(String[] args) {
         if (args.length != 1) {
             System.out.println("Ошибка: Укажите имя файла как аргумент командной строки.");
@@ -22,7 +12,7 @@ public class Main {
         }
         String fileName = args[0];
         MusicBandManager manager = new MusicBandManager();
-        manager.loadFromFile("music_bands.csv");
+        manager.loadFromFile(fileName);
 
         System.out.println("Данные о музыкальных группах успешно загружены:");
         for (MusicBand band : manager.getMusicBands()) {

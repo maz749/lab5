@@ -1,27 +1,14 @@
-/**
- * Команда для удаления элемента из коллекции по его id.
- */
 package commands;
 
-import manager.MusicBandManager;
+import manager.MusicBandCollection;
 
 public class RemoveByIdCommand implements Command {
-    private MusicBandManager manager;
+    private MusicBandCollection collection;
 
-    /**
-     * Конструктор команды RemoveByIdCommand.
-     *
-     * @param manager менеджер музыкальных групп
-     */
-    public RemoveByIdCommand(MusicBandManager manager) {
-        this.manager = manager;
+    public RemoveByIdCommand(MusicBandCollection collection) {
+        this.collection = collection;
     }
 
-    /**
-     * Выполняет команду удаления группы по ID.
-     *
-     * @param argument ID группы для удаления
-     */
     @Override
     public void execute(String argument) {
         try {
@@ -29,7 +16,7 @@ public class RemoveByIdCommand implements Command {
                 throw new IllegalArgumentException("Не указан id для удаления.");
             }
             int id = Integer.parseInt(argument);
-            if (manager.removeById(id)) {
+            if (collection.removeById(id)) {
                 System.out.println("Группа с ID " + id + " удалена.");
             } else {
                 System.out.println("Группа с ID " + id + " не найдена.");

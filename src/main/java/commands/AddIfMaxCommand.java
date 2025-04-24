@@ -1,96 +1,125 @@
 package commands;
 
-import manager.MusicBandManager;
+import manager.MusicBandCollection;
 import models.*;
 
-import java.text.ParseException;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * Команда для добавления новой музыкальной группы, если она максимальна.
+ */
 public class AddIfMaxCommand implements Command {
-    private MusicBandManager manager;
+    private MusicBandCollection collection;
 
-    /**
-     * Конструктор команды AddIfMaxCommand.
-     *
-     * @param manager менеджер музыкальных групп
-     */
-    public AddIfMaxCommand(MusicBandManager manager) {
-        this.manager = manager;
+    public AddIfMaxCommand(MusicBandCollection collection) {
+        this.collection = collection;
     }
 
-    /**
-     * Выполняет команду добавления новой музыкальной группы, если она максимальна.
-     *
-     * @param argument аргумент команды (не используется)
-     */
     @Override
     public void execute(String argument) {
-        Scanner scanner = new Scanner(System.in);
+        execute(argument, null);
+    }
+
+    @Override
+    public void execute(String argument, BufferedReader reader) {
         while (true) {
             try {
-                System.out.println("Введите название группы:");
-                String name = scanner.nextLine();
-                if (name == null || name.trim().isEmpty()) {
+                System.out.println("Введите данные для новой музыкальной группы:");
+
+                String name = readLine("Имя группы: ", reader);
+                if (name.isEmpty()) {
                     throw new IllegalArgumentException("Название группы не может быть пустым.");
                 }
 
-                System.out.println("Введите координаты X:");
-                Double x = Double.parseDouble(scanner.nextLine());
+                String xInput = readLine("Координата X: ", reader);
+                if (xInput.isEmpty()) {
+                    throw new IllegalArgumentException("Координата X не может быть пустой.");
+                }
+                double x = Double.parseDouble(xInput);
 
-                System.out.println("Введите координаты Y:");
-                Integer y = Integer.parseInt(scanner.nextLine());
+                String yInput = readLine("Координата Y: ", reader);
+                if (yInput.isEmpty()) {
+                    throw new IllegalArgumentException("Координата Y не может быть пустой.");
+                }
+                int y = Integer.parseInt(yInput);
 
-                System.out.println("Введите количество участников:");
-                int numberOfParticipants = Integer.parseInt(scanner.nextLine());
+                String participantsInput = readLine("Количество участников: ", reader);
+                if (participantsInput.isEmpty()) {
+                    throw new IllegalArgumentException("Количество участников не может быть пустым.");
+                }
+                int numberOfParticipants = Integer.parseInt(participantsInput);
                 if (numberOfParticipants <= 0) {
                     throw new IllegalArgumentException("Количество участников должно быть больше 0.");
                 }
 
-                System.out.println("Введите описание группы (можно оставить пустым):");
-                String description = scanner.nextLine();
+                String description = readLine("Описание (можно оставить пустым): ", reader);
                 if (description.isEmpty()) {
                     description = null;
                 }
 
-                System.out.println("Введите дату основания (yyyy-MM-dd):");
-                String dateStr = scanner.nextLine();
+                String dateStr = readLine("Дата основания (yyyy-MM-dd): ", reader);
+                if (dateStr.isEmpty()) {
+                    throw new IllegalArgumentException("Дата основания не может быть пустой.");
+                }
                 Date establishmentDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
 
-                System.out.println("Введите жанр. Доступные жанры: " + Arrays.toString(MusicGenre.values()));
-                MusicGenre genre = MusicGenre.valueOf(scanner.nextLine().toUpperCase());
+                String genreInput = readLine("Жанр (" + Arrays.toString(MusicGenre.values()) + "): ", reader);
+                if (genreInput.isEmpty()) {
+                    throw new IllegalArgumentException("Жанр не может быть пустым.");
+                }
+                MusicGenre genre = MusicGenre.valueOf(genreInput.toUpperCase());
 
-                System.out.println("Введите название лучшего альбома:");
-                String bestAlbumName = scanner.nextLine();
-                if (bestAlbumName.isEmpty()) {
+                String albumName = readLine("Название лучшего альбома: ", reader);
+                if (albumName.isEmpty()) {
                     throw new IllegalArgumentException("Название альбома не может быть пустым.");
                 }
 
-                System.out.println("Введите длину лучшего альбома:");
-                Integer bestAlbumLength = Integer.parseInt(scanner.nextLine());
-                if (bestAlbumLength <= 0) {
+                String albumLengthInput = readLine("Длина альбома (в секундах): ", reader);
+                if (albumLengthInput.isEmpty()) {
+                    throw new IllegalArgumentException("Длина альбома не может быть пустой.");
+                }
+                int albumLength = Integer.parseInt(albumLengthInput);
+                if (albumLength <= 0) {
                     throw new IllegalArgumentException("Длина альбома должна быть больше 0.");
                 }
 
                 Coordinates coordinates = new Coordinates(x, y);
-                Album bestAlbum = new Album(bestAlbumName, bestAlbumLength);
+                Album bestAlbum = new Album(albumName, albumLength);
                 MusicBand newBand = new MusicBand(name, coordinates, numberOfParticipants, description, establishmentDate, genre, bestAlbum);
 
-                if (manager.addIfMax(newBand)) {
+                if (collection.addIfMax(newBand)) {
                     System.out.println("Группа добавлена, так как она имеет максимальное количество участников.");
                 } else {
                     System.out.println("Группа не добавлена, так как она не имеет максимального количества участников.");
                 }
                 break;
-            } catch (ParseException e) {
-                System.out.println("Ошибка при вводе даты. Пожалуйста, используйте формат yyyy-MM-dd. Попробуйте снова.");
-            } catch (NumberFormatException e) {
-                System.out.println("Ошибка: Введено некорректное число. Попробуйте снова.");
-            } catch (IllegalArgumentException e) {
-                System.out.println("Ошибка: " + e.getMessage() + ". Попробуйте снова.");
+            } catch (Exception e) {
+                System.out.println("Ошибка при добавлении музыкальной группы: " + e.getMessage());
+                if (reader == null) {
+                    System.out.println("Попробуйте снова.");
+                } else {
+                    break; // В скрипте не повторяем ввод
+                }
             }
+        }
+    }
+
+    private String readLine(String prompt, BufferedReader reader) throws IOException {
+        System.out.print(prompt);
+        if (reader != null) {
+            String line = reader.readLine();
+            if (line == null) {
+                throw new IOException("Достигнут конец файла скрипта.");
+            }
+            System.out.println(line);
+            return line.trim();
+        } else {
+            return new Scanner(System.in).nextLine().trim();
         }
     }
 }

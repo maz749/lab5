@@ -1,34 +1,21 @@
-/**
- * Команда для вывода всех элементов коллекции.
- */
 package commands;
 
-import manager.MusicBandManager;
+import manager.MusicBandCollection;
 import models.MusicBand;
 
 public class ShowCommand implements Command {
-    private MusicBandManager manager;
+    private MusicBandCollection collection;
 
-    /**
-     * Конструктор команды ShowCommand.
-     *
-     * @param manager менеджер музыкальных групп
-     */
-    public ShowCommand(MusicBandManager manager) {
-        this.manager = manager;
+    public ShowCommand(MusicBandCollection collection) {
+        this.collection = collection;
     }
 
-    /**
-     * Выполняет команду вывода всех элементов коллекции.
-     *
-     * @param argument аргумент команды (не используется)
-     */
     @Override
     public void execute(String argument) {
-        if (manager.getMusicBands().isEmpty()) {
+        if (collection.getMusicBands().isEmpty()) {
             System.out.println("Коллекция пуста.");
         } else {
-            for (MusicBand band : manager.getMusicBands()) {
+            for (MusicBand band : collection.getMusicBands()) {
                 System.out.println(band);
             }
         }

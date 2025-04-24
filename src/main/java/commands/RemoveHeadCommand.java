@@ -1,31 +1,18 @@
-/**
- * Команда для удаления первого элемента коллекции.
- */
 package commands;
 
-import manager.MusicBandManager;
+import manager.MusicBandCollection;
 import models.MusicBand;
 
 public class RemoveHeadCommand implements Command {
-    private MusicBandManager manager;
+    private MusicBandCollection collection;
 
-    /**
-     * Конструктор команды RemoveHeadCommand.
-     *
-     * @param manager менеджер музыкальных групп
-     */
-    public RemoveHeadCommand(MusicBandManager manager) {
-        this.manager = manager;
+    public RemoveHeadCommand(MusicBandCollection collection) {
+        this.collection = collection;
     }
 
-    /**
-     * Выполняет команду удаления первого элемента.
-     *
-     * @param argument аргумент команды (не используется)
-     */
     @Override
     public void execute(String argument) {
-        MusicBand removedBand = manager.removeHead();
+        MusicBand removedBand = collection.removeHead();
         if (removedBand != null) {
             System.out.println("Удален первый элемент: " + removedBand);
         } else {

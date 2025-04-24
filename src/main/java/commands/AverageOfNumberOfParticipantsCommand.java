@@ -1,38 +1,21 @@
-/**
- * Команда для вывода среднего значения поля numberOfParticipants для всех элементов коллекции.
- */
 package commands;
 
-import manager.MusicBandManager;
-import models.MusicBand;
+import manager.MusicBandCollection;
 
 public class AverageOfNumberOfParticipantsCommand implements Command {
-    private MusicBandManager manager;
+    private MusicBandCollection collection;
 
-    /**
-     * Конструктор команды AverageOfNumberOfParticipantsCommand.
-     *
-     * @param manager менеджер музыкальных групп
-     */
-    public AverageOfNumberOfParticipantsCommand(MusicBandManager manager) {
-        this.manager = manager;
+    public AverageOfNumberOfParticipantsCommand(MusicBandCollection collection) {
+        this.collection = collection;
     }
 
-    /**
-     * Выполняет команду вывода среднего значения поля numberOfParticipants.
-     *
-     * @param argument аргумент команды (не используется)
-     */
     @Override
     public void execute(String argument) {
-        if (manager.getMusicBands().isEmpty()) {
+        if (collection.getMusicBands().isEmpty()) {
             System.out.println("Коллекция пуста.");
             return;
         }
-        double average = manager.getMusicBands().stream()
-                .mapToInt(MusicBand::getNumberOfParticipants)
-                .average()
-                .orElse(0);
+        double average = collection.getAverageNumberOfParticipants();
         System.out.println("Среднее количество участников: " + average);
     }
 }

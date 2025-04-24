@@ -1,30 +1,17 @@
-/**
- * Команда для сортировки коллекции в естественном порядке.
- */
 package commands;
 
-import manager.MusicBandManager;
+import manager.MusicBandCollection;
 
 public class SortCommand implements Command {
-    private MusicBandManager manager;
+    private MusicBandCollection collection;
 
-    /**
-     * Конструктор команды SortCommand.
-     *
-     * @param manager менеджер музыкальных групп
-     */
-    public SortCommand(MusicBandManager manager) {
-        this.manager = manager;
+    public SortCommand(MusicBandCollection collection) {
+        this.collection = collection;
     }
 
-    /**
-     * Выполняет команду сортировки коллекции.
-     *
-     * @param argument аргумент команды (не используется)
-     */
     @Override
     public void execute(String argument) {
-        manager.getMusicBands().sort(null);
+        collection.sort();
         System.out.println("Коллекция отсортирована по имени.");
     }
 }

@@ -1,6 +1,6 @@
 package commands;
 
-import manager.MusicBandManager;
+import manager.CommandExecutor;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,44 +12,27 @@ import java.util.Set;
  * Команда выполнения скрипта.
  */
 public class ExecuteScriptCommand implements Command {
-    private MusicBandManager manager;
+    private CommandExecutor executor;
     private Set<String> executedScripts;
     private static final int MAX_RECURSION_DEPTH = 10;
     private static int currentRecursionDepth = 0;
 
-    /**
-     * Конструктор команды ExecuteScriptCommand.
-     *
-     * @param manager менеджер музыкальных групп
-     */
-    public ExecuteScriptCommand(MusicBandManager manager) {
-        this.manager = manager;
+    public ExecuteScriptCommand(CommandExecutor executor) {
+        this.executor = executor;
         this.executedScripts = new HashSet<>();
     }
 
-    /**
-     * Выполняет команду чтения и исполнения скрипта из файла.
-     *
-     * @param fileName имя файла скрипта
-     */
     @Override
     public void execute(String fileName) {
         execute(fileName, null);
     }
 
-    /**
-     * Выполняет команду чтения и исполнения скрипта из файла с использованием источника ввода.
-     *
-     * @param fileName имя файла скрипта
-     * @param reader источник ввода данных (может быть null)
-     */
     @Override
     public void execute(String fileName, BufferedReader reader) {
         if (fileName == null || fileName.trim().isEmpty()) {
             System.out.println("Ошибка: Не указано имя файла скрипта.");
             return;
         }
-
 
         if (currentRecursionDepth >= MAX_RECURSION_DEPTH) {
             System.out.println("Ошибка: Достигнута максимальная глубина рекурсии (" + MAX_RECURSION_DEPTH + ").");
@@ -78,7 +61,7 @@ public class ExecuteScriptCommand implements Command {
                 String cmd = parts[0].toLowerCase();
                 String argument = parts.length > 1 ? parts[1] : null;
 
-                Command command = manager.getCommands().get(cmd);
+                Command command = executor.getCommands().get(cmd);
                 if (command instanceof AddCommand ||
                         command instanceof UpdateCommand ||
                         command instanceof RemoveLowerCommand ||
@@ -86,7 +69,7 @@ public class ExecuteScriptCommand implements Command {
                         command instanceof InsertAtCommand) {
                     command.execute(argument, fileReader);
                 } else {
-                    manager.executeCommand(line, null);
+                    executor.executeCommand(line, null);
                 }
             }
         } catch (IOException e) {
