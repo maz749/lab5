@@ -4,7 +4,7 @@ import manager.MusicBandCollection;
 import models.MusicBand;
 
 public class RemoveHeadCommand implements Command {
-    private MusicBandCollection collection;
+    private final MusicBandCollection collection;
 
     public RemoveHeadCommand(MusicBandCollection collection) {
         this.collection = collection;

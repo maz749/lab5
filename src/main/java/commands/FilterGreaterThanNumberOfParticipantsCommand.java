@@ -3,7 +3,7 @@ package commands;
 import manager.MusicBandCollection;
 
 public class FilterGreaterThanNumberOfParticipantsCommand implements Command {
-    private MusicBandCollection collection;
+    private final MusicBandCollection collection;
 
     public FilterGreaterThanNumberOfParticipantsCommand(MusicBandCollection collection) {
         this.collection = collection;

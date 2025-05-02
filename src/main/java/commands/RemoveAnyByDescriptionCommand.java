@@ -3,7 +3,7 @@ package commands;
 import manager.MusicBandCollection;
 
 public class RemoveAnyByDescriptionCommand implements Command {
-    private MusicBandCollection collection;
+    private final MusicBandCollection collection;
 
     public RemoveAnyByDescriptionCommand(MusicBandCollection collection) {
         this.collection = collection;

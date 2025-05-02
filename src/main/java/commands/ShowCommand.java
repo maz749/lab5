@@ -4,7 +4,7 @@ import manager.MusicBandCollection;
 import models.MusicBand;
 
 public class ShowCommand implements Command {
-    private MusicBandCollection collection;
+    private final MusicBandCollection collection;
 
     public ShowCommand(MusicBandCollection collection) {
         this.collection = collection;

@@ -3,7 +3,7 @@ package commands;
 import manager.MusicBandCollection;
 
 public class RemoveByIdCommand implements Command {
-    private MusicBandCollection collection;
+    private final MusicBandCollection collection;
 
     public RemoveByIdCommand(MusicBandCollection collection) {
         this.collection = collection;
@@ -13,7 +13,7 @@ public class RemoveByIdCommand implements Command {
     public void execute(String argument) {
         try {
             if (argument == null || argument.isEmpty()) {
-                throw new IllegalArgumentException("Не указан id для удаления.");
+                throw new IllegalArgumentException("Не указан ID для удаления.");
             }
             int id = Integer.parseInt(argument);
             if (collection.removeById(id)) {

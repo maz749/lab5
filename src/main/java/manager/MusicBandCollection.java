@@ -2,23 +2,20 @@ package manager;
 
 import models.MusicBand;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Класс для управления коллекцией музыкальных групп.
- */
 public class MusicBandCollection {
-    private List<MusicBand> musicBands;
+    private final List<MusicBand> musicBands;
 
     public MusicBandCollection() {
         this.musicBands = new ArrayList<>();
     }
 
     public List<MusicBand> getMusicBands() {
-        return musicBands;
+        return musicBands.stream()
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     public void add(MusicBand band) {
@@ -26,7 +23,9 @@ public class MusicBandCollection {
     }
 
     public boolean addIfMax(MusicBand newBand) {
-        if (musicBands.isEmpty() || newBand.compareTo(musicBands.stream().max(Comparator.naturalOrder()).orElse(null)) > 0) {
+        Optional<MusicBand> maxBand = musicBands.stream()
+                .max(Comparator.comparing(MusicBand::getNumberOfParticipants));
+        if (maxBand.isEmpty() || newBand.getNumberOfParticipants() > maxBand.get().getNumberOfParticipants()) {
             musicBands.add(newBand);
             System.out.println("Музыкальная группа добавлена: " + newBand);
             return true;
@@ -45,21 +44,28 @@ public class MusicBandCollection {
     }
 
     public MusicBand getMusicBandById(int id) {
-        return musicBands.stream().filter(band -> band.getId() == id).findFirst().orElse(null);
+        return musicBands.stream()
+                .filter(band -> band.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public List<MusicBand> filterByNumberOfParticipants(int numberOfParticipants) {
         return musicBands.stream()
                 .filter(band -> band.getNumberOfParticipants() == numberOfParticipants)
+                .sorted()
                 .collect(Collectors.toList());
     }
 
     public boolean removeAnyByDescription(String description) {
-        return musicBands.removeIf(band -> band.getDescription() != null && band.getDescription().equalsIgnoreCase(description));
+        return musicBands.removeIf(band ->
+                band.getDescription() != null && band.getDescription().equalsIgnoreCase(description));
     }
 
     public MusicBand getMaxByName() {
-        return musicBands.stream().max(Comparator.comparing(MusicBand::getName)).orElse(null);
+        return musicBands.stream()
+                .max(Comparator.comparing(MusicBand::getName))
+                .orElse(null);
     }
 
     public void maxByName() {
@@ -72,14 +78,12 @@ public class MusicBandCollection {
     }
 
     public MusicBand removeHead() {
-        if (!musicBands.isEmpty()) {
-            return musicBands.remove(0);
-        }
-        return null;
+        return musicBands.isEmpty() ? null : musicBands.remove(0);
     }
 
     public void removeLower(MusicBand lowerBand) {
-        musicBands.removeIf(band -> band.getNumberOfParticipants() < lowerBand.getNumberOfParticipants());
+        musicBands.removeIf(band ->
+                band.getNumberOfParticipants() < lowerBand.getNumberOfParticipants());
     }
 
     public void update(int id, MusicBand updatedBand) {
@@ -94,7 +98,7 @@ public class MusicBandCollection {
     }
 
     public void sort() {
-        musicBands.sort(null);
+        musicBands.sort(Comparator.naturalOrder());
     }
 
     public double getAverageNumberOfParticipants() {

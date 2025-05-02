@@ -1,12 +1,10 @@
 package manager;
 
 import models.MusicBand;
+import common.CommandRequest;
 
 import java.util.List;
 
-/**
- * Фасад для управления коллекцией музыкальных групп.
- */
 public class MusicBandManager {
     private final MusicBandCollection collection;
     private final FileStorage storage;
@@ -26,7 +24,22 @@ public class MusicBandManager {
         executor.executeCommand(commandLine, null);
     }
 
+    public void executeCommand(CommandRequest request) {
+        executor.executeCommand(request);
+    }
+
     public List<MusicBand> getMusicBands() {
         return collection.getMusicBands();
+    }
+
+    public MusicBandCollection getCollection() {
+        return collection;
+    }
+
+    public CommandExecutor getExecutor() {
+        if (executor == null) {
+            throw new IllegalStateException("CommandExecutor не инициализирован в MusicBandManager.");
+        }
+        return executor;
     }
 }

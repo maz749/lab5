@@ -5,7 +5,7 @@ import manager.MusicBandCollection;
 import java.util.Date;
 
 public class InfoCommand implements Command {
-    private MusicBandCollection collection;
+    private final MusicBandCollection collection;
 
     public InfoCommand(MusicBandCollection collection) {
         this.collection = collection;

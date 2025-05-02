@@ -3,12 +3,8 @@ package manager;
 import models.*;
 
 import java.io.*;
-import java.text.*;
 import java.util.*;
 
-/**
- * Класс для чтения и записи данных музыкальных групп в CSV-файл.
- */
 public class FileStorage {
     private final MusicBandFactory factory;
     private String fileName;
@@ -25,9 +21,7 @@ public class FileStorage {
             String line;
             int count = 0;
             while ((line = reader.readLine()) != null) {
-                if (line.trim().isEmpty()) {
-                    continue;
-                }
+                if (line.trim().isEmpty()) continue;
                 MusicBand band = factory.parseMusicBand(line);
                 if (band != null && !usedIds.contains(band.getId())) {
                     collection.add(band);
@@ -47,7 +41,7 @@ public class FileStorage {
 
     public void saveToFile(String fileName, MusicBandCollection collection) {
         if (fileName == null || fileName.isEmpty()) {
-            fileName = this.fileName;
+            fileName = this.fileName != null ? this.fileName : "music_bands.csv";
         }
         if (fileName == null) {
             System.out.println("Ошибка: Имя файла не указано.");

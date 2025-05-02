@@ -5,16 +5,11 @@ import models.*;
 import java.text.*;
 import java.util.*;
 
-/**
- * Класс для создания объектов MusicBand из строк CSV.
- */
 public class MusicBandFactory {
     public MusicBand parseMusicBand(String line) {
         line = line.trim().replaceAll("\\s+", " ");
-        if (line.isEmpty()) {
-            return null;
-        }
-        String[] parts = line.split(",", -1); // -1 to include empty fields
+        if (line.isEmpty()) return null;
+        String[] parts = line.split(",", -1);
 
         if (parts.length != 9) {
             System.out.println("Некорректная строка (неверное количество полей): " + line);
@@ -62,23 +57,15 @@ public class MusicBandFactory {
                 System.out.println("Ошибка: Некорректная длина альбома в строке: " + line);
                 return null;
             }
-        } catch (NumberFormatException e) {
-            System.out.println("Ошибка парсинга числовых данных в строке: " + line);
-            return null;
-        } catch (ParseException e) {
-            System.out.println("Ошибка парсинга даты в строке: " + line);
-            return null;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка парсинга жанра в строке: " + line);
+        } catch (IllegalArgumentException | ParseException e) {
+            System.out.println("Ошибка парсинга данных в строке: " + line);
             return null;
         }
 
         try {
             Coordinates coordinates = new Coordinates(x, y);
             Album bestAlbum = new Album(bestAlbumName, bestAlbumLength);
-            if (description.isEmpty()) {
-                description = null;
-            }
+            if (description.isEmpty()) description = null;
             return new MusicBand(name, coordinates, numberOfParticipants, description, establishmentDate, genre, bestAlbum);
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка создания MusicBand: " + e.getMessage() + " в строке: " + line);

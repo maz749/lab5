@@ -3,7 +3,7 @@ package commands;
 import manager.MusicBandCollection;
 
 public class SortCommand implements Command {
-    private MusicBandCollection collection;
+    private final MusicBandCollection collection;
 
     public SortCommand(MusicBandCollection collection) {
         this.collection = collection;

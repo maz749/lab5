@@ -1,5 +1,7 @@
 package commands;
 
+import client.Client;
+import common.CommandRequest;
 import manager.CommandExecutor;
 
 import java.io.BufferedReader;
@@ -8,27 +10,21 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Команда выполнения скрипта.
- */
 public class ExecuteScriptCommand implements Command {
-    private CommandExecutor executor;
-    private Set<String> executedScripts;
+    private final CommandExecutor executor;
+    private final Client client;
+    private final Set<String> executedScripts;
     private static final int MAX_RECURSION_DEPTH = 10;
     private static int currentRecursionDepth = 0;
 
-    public ExecuteScriptCommand(CommandExecutor executor) {
+    public ExecuteScriptCommand(CommandExecutor executor, Client client) {
         this.executor = executor;
+        this.client = client;
         this.executedScripts = new HashSet<>();
     }
 
     @Override
     public void execute(String fileName) {
-        execute(fileName, null);
-    }
-
-    @Override
-    public void execute(String fileName, BufferedReader reader) {
         if (fileName == null || fileName.trim().isEmpty()) {
             System.out.println("Ошибка: Не указано имя файла скрипта.");
             return;
@@ -40,7 +36,7 @@ public class ExecuteScriptCommand implements Command {
         }
 
         if (executedScripts.contains(fileName)) {
-            System.out.println("Скрипт " + fileName + " уже выполняется в текущей цепочке. Прерывание выполнения для предотвращения рекурсии.");
+            System.out.println("Скрипт " + fileName + " уже выполняется. Прерывание для предотвращения рекурсии.");
             return;
         }
 
@@ -52,25 +48,9 @@ public class ExecuteScriptCommand implements Command {
             String line;
             while ((line = fileReader.readLine()) != null) {
                 line = line.trim();
-                if (line.isEmpty()) {
-                    continue;
-                }
+                if (line.isEmpty()) continue;
                 System.out.println("Выполняется команда: " + line);
-
-                String[] parts = line.split(" ", 2);
-                String cmd = parts[0].toLowerCase();
-                String argument = parts.length > 1 ? parts[1] : null;
-
-                Command command = executor.getCommands().get(cmd);
-                if (command instanceof AddCommand ||
-                        command instanceof UpdateCommand ||
-                        command instanceof RemoveLowerCommand ||
-                        command instanceof AddIfMaxCommand ||
-                        command instanceof InsertAtCommand) {
-                    command.execute(argument, fileReader);
-                } else {
-                    executor.executeCommand(line, null);
-                }
+                client.processScriptCommand(line, fileReader);
             }
         } catch (IOException e) {
             System.out.println("Ошибка при выполнении скрипта: " + e.getMessage());

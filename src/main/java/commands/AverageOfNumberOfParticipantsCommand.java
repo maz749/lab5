@@ -3,7 +3,7 @@ package commands;
 import manager.MusicBandCollection;
 
 public class AverageOfNumberOfParticipantsCommand implements Command {
-    private MusicBandCollection collection;
+    private final MusicBandCollection collection;
 
     public AverageOfNumberOfParticipantsCommand(MusicBandCollection collection) {
         this.collection = collection;

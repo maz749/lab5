@@ -3,7 +3,7 @@ package commands;
 import manager.MusicBandCollection;
 
 public class MaxByNameCommand implements Command {
-    private MusicBandCollection collection;
+    private final MusicBandCollection collection;
 
     public MaxByNameCommand(MusicBandCollection collection) {
         this.collection = collection;
