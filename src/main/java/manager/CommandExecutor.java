@@ -30,7 +30,7 @@ public class CommandExecutor {
         commands.put("remove_any_by_description", new RemoveAnyByDescriptionCommand(collection));
         commands.put("remove_head", new RemoveHeadCommand(collection));
         commands.put("remove_lower", new RemoveLowerCommand(collection));
-        commands.put("save", new SaveCommand(storage));
+        commands.put("save", new SaveCommand(storage, collection));
         commands.put("show", new ShowCommand(collection));
         commands.put("update", new UpdateCommand(collection));
         commands.put("insert_at", new InsertAtCommand(collection));

@@ -4,9 +4,6 @@ import models.MusicBand;
 
 import java.util.List;
 
-/**
- * Фасад для управления коллекцией музыкальных групп.
- */
 public class MusicBandManager {
     private final MusicBandCollection collection;
     private final FileStorage storage;
@@ -22,11 +19,11 @@ public class MusicBandManager {
         storage.loadFromFile(fileName, collection);
     }
 
-    public void executeCommand(String commandLine) {
-        executor.executeCommand(commandLine, null);
-    }
-
     public List<MusicBand> getMusicBands() {
         return collection.getMusicBands();
+    }
+
+    public void executeCommand(String command) {
+        executor.executeCommand(command, null);
     }
 }
