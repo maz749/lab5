@@ -1,19 +1,16 @@
 package commands;
 
 import manager.FileStorage;
-import manager.MusicBandCollection;
 
 public class SaveCommand implements Command {
-    private final FileStorage storage;
-    private final MusicBandCollection collection;
+    private FileStorage storage;
 
-    public SaveCommand(FileStorage storage, MusicBandCollection collection) {
+    public SaveCommand(FileStorage storage) {
         this.storage = storage;
-        this.collection = collection;
     }
 
     @Override
     public void execute(String argument) {
-        storage.saveToFile(null, collection);
+        storage.saveToFile(null, null);
     }
 }
