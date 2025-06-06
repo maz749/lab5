@@ -1,0 +1,119 @@
+2025-05-17 14:46:28 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-05-17 14:46:43 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-05-17 14:46:43 [main] INFO  lab6.lab.server.Server - Сервер запущен на порту 5001
+2025-05-17 14:46:48 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 141
+2025-05-17 14:46:48 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: show
+2025-05-17 14:46:48 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: show
+2025-05-17 14:46:48 [main] INFO  lab6.lab.server.CommandProcessor - Команда show выполнена, возвращен список из 1 элементов
+2025-05-17 14:46:48 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 1003
+2025-05-17 14:46:48 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: show
+2025-05-17 14:47:04 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 925
+2025-05-17 14:47:04 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: add
+2025-05-17 14:47:04 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: add
+2025-05-17 14:47:04 [main] INFO  lab6.lab.server.CommandProcessor - Добавлена новая музыкальная группа: 123
+2025-05-17 14:47:04 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 194
+2025-05-17 14:47:04 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: add
+2025-05-21 11:35:31 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-05-21 11:35:31 [main] INFO  lab6.lab.server.Server - Сервер запущен на порту 5001
+2025-05-21 11:35:47 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-05-21 11:35:51 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 141
+2025-05-21 11:35:51 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: help
+2025-05-21 11:35:51 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: help
+2025-05-21 11:35:51 [main] INFO  lab6.lab.common.manager.CommandExecutor - Выполнение команды через строку: help
+2025-05-21 11:35:51 [main] INFO  lab6.lab.server.CommandProcessor - Команда help выполнена
+2025-05-21 11:35:51 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 172
+2025-05-21 11:35:51 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: help
+2025-05-21 11:35:58 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 141
+2025-05-21 11:35:58 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: show
+2025-05-21 11:35:58 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: show
+2025-05-21 11:35:58 [main] INFO  lab6.lab.server.CommandProcessor - Команда show выполнена, возвращен список из 1 элементов
+2025-05-21 11:35:58 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 1003
+2025-05-21 11:35:58 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: show
+2025-05-21 11:36:04 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 925
+2025-05-21 11:36:04 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: add
+2025-05-21 11:36:04 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: add
+2025-05-21 11:36:04 [main] INFO  lab6.lab.server.CommandProcessor - Добавлена новая музыкальная группа: 123
+2025-05-21 11:36:04 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 194
+2025-05-21 11:36:04 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: add
+2025-05-21 11:36:07 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 141
+2025-05-21 11:36:07 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: show
+2025-05-21 11:36:07 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: show
+2025-05-21 11:36:07 [main] INFO  lab6.lab.server.CommandProcessor - Команда show выполнена, возвращен список из 2 элементов
+2025-05-21 11:36:07 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 1129
+2025-05-21 11:36:07 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: show
+2025-05-22 14:58:57 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-05-23 23:33:20 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-05-30 02:39:18 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-05-30 02:39:26 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-05-30 02:39:26 [main] INFO  lab6.lab.server.Server - Сервер запущен на порту 5001
+2025-05-30 02:39:37 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 141
+2025-05-30 02:39:37 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: show
+2025-05-30 02:39:37 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: show
+2025-05-30 02:39:37 [main] INFO  lab6.lab.server.CommandProcessor - Команда show выполнена, возвращен список из 1 элементов
+2025-05-30 02:39:37 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 1003
+2025-05-30 02:39:37 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: show
+2025-05-30 02:39:47 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 925
+2025-05-30 02:39:47 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: add
+2025-05-30 02:39:47 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: add
+2025-05-30 02:39:47 [main] INFO  lab6.lab.server.CommandProcessor - Добавлена новая музыкальная группа: 123
+2025-05-30 02:39:47 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 194
+2025-05-30 02:39:47 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: add
+2025-05-30 02:39:49 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 141
+2025-05-30 02:39:49 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: show
+2025-05-30 02:39:49 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: show
+2025-05-30 02:39:49 [main] INFO  lab6.lab.server.CommandProcessor - Команда show выполнена, возвращен список из 2 элементов
+2025-05-30 02:39:49 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 1129
+2025-05-30 02:39:49 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: show
+2025-05-30 02:40:01 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-05-30 02:40:03 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 141
+2025-05-30 02:40:03 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: show
+2025-05-30 02:40:03 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: show
+2025-05-30 02:40:03 [main] INFO  lab6.lab.server.CommandProcessor - Команда show выполнена, возвращен список из 2 элементов
+2025-05-30 02:40:03 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 1129
+2025-05-30 02:40:03 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: show
+2025-06-02 13:05:44 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-06-02 13:05:49 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-06-02 13:05:49 [main] INFO  lab6.lab.server.Server - Сервер запущен на порту 5001
+2025-06-02 13:07:44 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-06-02 13:08:06 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-06-02 13:08:06 [main] INFO  lab6.lab.server.Server - Сервер запущен на порту 5001
+2025-06-02 13:08:14 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 141
+2025-06-02 13:08:14 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: show
+2025-06-02 13:08:14 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: show
+2025-06-02 13:08:14 [main] INFO  lab6.lab.server.CommandProcessor - Команда show выполнена, возвращен список из 1 элементов
+2025-06-02 13:08:14 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 1003
+2025-06-02 13:08:14 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: show
+2025-06-02 13:08:33 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 925
+2025-06-02 13:08:33 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: add
+2025-06-02 13:08:33 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: add
+2025-06-02 13:08:33 [main] INFO  lab6.lab.server.CommandProcessor - Добавлена новая музыкальная группа: 123
+2025-06-02 13:08:33 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 194
+2025-06-02 13:08:33 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: add
+2025-06-02 13:10:52 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 1188
+2025-06-02 13:10:52 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: add
+2025-06-02 13:10:52 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: add
+2025-06-02 13:10:52 [main] INFO  lab6.lab.server.CommandProcessor - Добавлена новая музыкальная группа: thrthrthrhetethethethhhhhhhhhhhhhhhhgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+2025-06-02 13:10:52 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 194
+2025-06-02 13:10:52 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: add
+2025-06-06 20:37:31 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-06-06 20:43:42 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-06-06 20:43:42 [main] INFO  lab6.lab.server.Server - Сервер запущен на порту 5001
+2025-06-06 20:43:49 [main] INFO  lab6.lab.common.manager.CommandExecutor - Команды зарегистрированы. Всего команд: 20
+2025-06-06 20:43:53 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 141
+2025-06-06 20:43:53 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: show
+2025-06-06 20:43:53 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: show
+2025-06-06 20:43:53 [main] INFO  lab6.lab.server.CommandProcessor - Команда show выполнена, возвращен список из 1 элементов
+2025-06-06 20:43:53 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 1003
+2025-06-06 20:43:53 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: show
+2025-06-06 20:43:59 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 925
+2025-06-06 20:43:59 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: add
+2025-06-06 20:43:59 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: add
+2025-06-06 20:43:59 [main] INFO  lab6.lab.server.CommandProcessor - Добавлена новая музыкальная группа: 123
+2025-06-06 20:43:59 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 194
+2025-06-06 20:43:59 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: add
+2025-06-06 20:44:01 [main] INFO  lab6.lab.server.RequestHandler - Получен новый запрос от клиента: размер пакета 141
+2025-06-06 20:44:01 [main] INFO  lab6.lab.server.Server - Получен новый запрос от клиента: show
+2025-06-06 20:44:01 [main] INFO  lab6.lab.server.CommandProcessor - Начало обработки запроса: show
+2025-06-06 20:44:01 [main] INFO  lab6.lab.server.CommandProcessor - Команда show выполнена, возвращен список из 2 элементов
+2025-06-06 20:44:01 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 1129
+2025-06-06 20:44:01 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: show

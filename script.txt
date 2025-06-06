@@ -1,0 +1,10 @@
+add
+123
+1.0
+2
+5
+Description
+2023-01-01
+ROCK
+Album1
+300
