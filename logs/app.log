@@ -117,3 +117,14 @@
 2025-06-06 20:44:01 [main] INFO  lab6.lab.server.CommandProcessor - Команда show выполнена, возвращен список из 2 элементов
 2025-06-06 20:44:01 [main] INFO  lab6.lab.server.ResponseSender - Отправка ответа клиенту: размер пакета 1129
 2025-06-06 20:44:01 [main] INFO  lab6.lab.server.Server - Отправлен ответ клиенту на команду: show
+2025-06-06 23:27:03 [main] ERROR lab6.lab.server.Server - Failed to initialize MusicBandManager: PostgreSQL Driver not found
+2025-06-06 23:29:42 [main] ERROR lab6.lab.server.Server - Failed to initialize MusicBandManager: PostgreSQL Driver not found
+2025-06-06 23:38:05 [main] ERROR lab6.lab.server.Server - Failed to initialize MusicBandManager: PostgreSQL Driver not found
+2025-06-06 23:38:59 [main] ERROR lab6.lab.server.Server - Failed to initialize MusicBandManager: PostgreSQL Driver not found
+2025-06-06 23:39:39 [main] ERROR lab6.lab.server.Server - Failed to initialize MusicBandManager: PostgreSQL Driver not found
+2025-06-06 23:47:16 [main] ERROR lab6.lab.server.Server - Failed to initialize MusicBandManager: PostgreSQL Driver not found
+2025-06-06 23:49:58 [main] ERROR lab6.lab.server.Server - Failed to initialize MusicBandManager: PostgreSQL Driver not found
+2025-06-06 23:51:48 [main] ERROR lab6.lab.server.Server - Failed to initialize MusicBandManager: PostgreSQL Driver not found
+2025-06-07 00:02:14 [main] ERROR lab6.lab.server.Server - Failed to initialize MusicBandManager: PostgreSQL Driver not found
+2025-06-07 00:55:27 [main] ERROR lab6.lab.common.manager.DatabaseManager - PostgreSQL Driver not found: org.postgresql.Driver
+2025-06-07 00:55:27 [main] ERROR lab6.lab.server.Server - Failed to initialize MusicBandManager: PostgreSQL Driver not found

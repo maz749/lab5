@@ -2,7 +2,10 @@ package lab6.lab.common.commands;
 
 import lab6.lab.common.manager.MusicBandCollection;
 
-public class RemoveAnyByDescriptionCommand implements lab6.lab.common.commands.Command {
+/**
+ * Команда для удаления одной группы с указанным описанием.
+ */
+public class RemoveAnyByDescriptionCommand implements Command {
     private final MusicBandCollection collection;
 
     public RemoveAnyByDescriptionCommand(MusicBandCollection collection) {
@@ -11,11 +14,12 @@ public class RemoveAnyByDescriptionCommand implements lab6.lab.common.commands.C
 
     @Override
     public void execute(String argument) {
-        if (argument == null || argument.isEmpty()) {
-            System.out.println("Не указано описание для удаления.");
+        if (argument == null || argument.trim().isEmpty()) {
+            System.out.println("Ошибка: Требуется указать описание.");
             return;
         }
-        if (collection.removeAnyByDescription(argument)) {
+        boolean removed = collection.removeAnyByDescription(argument);
+        if (removed) {
             System.out.println("Группа с описанием '" + argument + "' удалена.");
         } else {
             System.out.println("Группа с описанием '" + argument + "' не найдена.");

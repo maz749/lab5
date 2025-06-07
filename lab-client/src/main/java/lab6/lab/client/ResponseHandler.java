@@ -1,31 +1,25 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package lab6.lab.client;
 
-import java.io.PrintStream;
-import java.util.List;
-import java.util.Objects;
 import lab6.lab.common.CommandResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.List;
 
 public class ResponseHandler {
-    public ResponseHandler() {
-    }
+    private static final Logger logger = LogManager.getLogger(ResponseHandler.class);
 
     public void handleResponse(CommandResponse response) {
         if (response.isSuccess()) {
+            logger.info("Command executed successfully: {}", response.getMessage());
             System.out.println(response.getMessage());
-            if (response.getData() != null) {
-                List var10000 = response.getData();
-                PrintStream var10001 = System.out;
-                Objects.requireNonNull(var10001);
-                var10000.forEach(var10001::println);
+            if (response.getData() != null && !response.getData().isEmpty()) {
+                logger.debug("Received {} data items", response.getData().size());
+                response.getData().forEach(System.out::println);
             }
         } else {
+            logger.error("Command failed: {}", response.getMessage());
             System.out.println("Ошибка: " + response.getMessage());
         }
-
     }
 }

@@ -1,27 +1,32 @@
 package lab6.lab.common.commands;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
-public class HistoryCommand implements lab6.lab.common.commands.Command {
-    private static final int MAX_HISTORY_SIZE = 12;
-    private static final Queue<String> commandHistory = new LinkedList<>();
+/**
+ * Команда для отображения истории последних выполненных команд.
+ */
+public class HistoryCommand implements Command {
+    private static final int MAX_HISTORY_SIZE = 10;
+    private static final List<String> history = new ArrayList<>();
 
     public static void addToHistory(String command) {
-        if (commandHistory.size() >= MAX_HISTORY_SIZE) {
-            commandHistory.poll();
+        synchronized (history) {
+            if (history.size() >= MAX_HISTORY_SIZE) {
+                history.remove(0);
+            }
+            history.add(command);
         }
-        commandHistory.offer(command);
     }
 
     @Override
     public void execute(String argument) {
-        System.out.println("История последних " + MAX_HISTORY_SIZE + " команд:");
-        if (commandHistory.isEmpty()) {
-            System.out.println("История пуста.");
-        } else {
-            for (String cmd : commandHistory) {
-                System.out.println(cmd);
+        synchronized (history) {
+            if (history.isEmpty()) {
+                System.out.println("История команд пуста.");
+            } else {
+                System.out.println("Последние команды:");
+                history.forEach(System.out::println);
             }
         }
     }

@@ -1,26 +1,52 @@
 package lab6.lab.common.commands;
 
-public class HelpCommand implements lab6.lab.common.commands.Command {
+import lab6.lab.common.CommandResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class HelpCommand implements Command {
+    private static final Logger logger = LogManager.getLogger(HelpCommand.class);
+
     @Override
     public void execute(String argument) {
+        List<String> commandList = getCommandList();
+        logger.info("Executing help command, displaying {} commands.", commandList.size());
         System.out.println("Доступные команды:");
-        System.out.println("help : вывести справку по доступным командам");
-        System.out.println("info : вывести информацию о коллекции");
-        System.out.println("show : вывести все элементы коллекции");
-        System.out.println("add {element} : добавить новый элемент в коллекцию");
-        System.out.println("update id {element} : обновить значение элемента по id");
-        System.out.println("remove_by_id id : удалить элемент по id");
-        System.out.println("clear : очистить коллекцию");
-        System.out.println("execute_script file_name : выполнить скрипт из файла");
-        System.out.println("exit : завершить программу");
-        System.out.println("insert_at index {element} : добавить элемент на указанную позицию");
-        System.out.println("sort : отсортировать коллекцию по имени");
-        System.out.println("history : вывести последние 12 команд");
-        System.out.println("average_of_number_of_participants : вывести среднее количество участников");
-        System.out.println("filter_greater_than_number_of_participants numberOfParticipants : вывести элементы с количеством участников больше заданного");
-        System.out.println("max_by_name : вывести группу с максимальным именем");
-        System.out.println("add_if_max : добавить, если максимальное");
-        System.out.println("remove_lower : удалить элементы с меньшим количеством участников");
-        System.out.println("remove_any_by_description : удалить по описанию");
+        commandList.forEach(System.out::println);
+    }
+
+    public CommandResponse executeWithResponse() {
+        List<String> commandList = getCommandList();
+        logger.info("Returning {} commands for help command.", commandList.size());
+        return new CommandResponse("Available commands:", commandList, true);
+    }
+
+    private List<String> getCommandList() {
+        return Arrays.asList(
+                "add {element} - Добавить новую музыкальную группу в коллекцию.",
+                "add_if_max {element} - Добавить группу, если её количество участников максимально.",
+                "average_of_number_of_participants - Вычислить среднее количество участников.",
+                "clear - Очистить коллекцию текущего пользователя.",
+                "execute_script file_name - Выполнить скрипт из файла.",
+                "filter_by_number_of_participants number - Показать группы с заданным количеством участников.",
+                "filter_greater_than_number_of_participants number - Показать группы с количеством участников больше заданного.",
+                "help - Показать список команд.",
+                "history - Показать последние выполненные команды.",
+                "info - Показать информацию о коллекции.",
+                "insert_at index {element} - Вставить группу на указанную позицию.",
+                "login - Войти в систему.",
+                "max_by_name - Показать группу с максимальным именем.",
+                "register - Зарегистрировать нового пользователя.",
+                "remove_any_by_description description - Удалить одну группу с указанным описанием.",
+                "remove_by_id id - Удалить группу по ID.",
+                "remove_head - Удалить первую группу в коллекции.",
+                "remove_lower {element} - Удалить группы с меньшим количеством участников.",
+                "show - Показать все группы в коллекции.",
+                "sort - Отсортировать коллекцию.",
+                "update id {element} - Обновить группу с указанным ID."
+        );
     }
 }

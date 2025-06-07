@@ -3,8 +3,6 @@ package lab6.lab.common.commands;
 import lab6.lab.common.manager.MusicBandCollection;
 import lab6.lab.common.models.MusicBand;
 
-import java.io.BufferedReader;
-
 public class AddCommand implements Command {
     private final MusicBandCollection collection;
 
@@ -14,19 +12,14 @@ public class AddCommand implements Command {
 
     @Override
     public void execute(String argument) {
-        throw new UnsupportedOperationException("Команда add требует объект MusicBand и должна вызываться с объектом.");
-    }
-
-    @Override
-    public void execute(String argument, BufferedReader reader) {
-        throw new UnsupportedOperationException("Команда add на сервере не поддерживает консольный ввод.");
+        System.out.println("Команда add требует объект MusicBand.");
     }
 
     public void execute(MusicBand band) {
         if (band == null) {
-            throw new IllegalArgumentException("Объект MusicBand не предоставлен.");
+            throw new IllegalArgumentException("Объект MusicBand не может быть null.");
         }
         collection.add(band);
-        System.out.println("Музыкальная группа добавлена на сервере: " + band);
+        System.out.println("Музыкальная группа " + band.getName() + " добавлена в коллекцию.");
     }
 }

@@ -12,6 +12,6 @@ public class ClearCommand implements Command {
     @Override
     public void execute(String argument) {
         collection.clear();
-        System.out.println("Коллекция очищена.");
+        System.out.println("Коллекция очищена для текущего пользователя.");
     }
 }

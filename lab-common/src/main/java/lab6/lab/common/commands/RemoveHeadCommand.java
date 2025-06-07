@@ -3,7 +3,10 @@ package lab6.lab.common.commands;
 import lab6.lab.common.manager.MusicBandCollection;
 import lab6.lab.common.models.MusicBand;
 
-public class RemoveHeadCommand implements lab6.lab.common.commands.Command {
+/**
+ * Команда для удаления первой группы в коллекции.
+ */
+public class RemoveHeadCommand implements Command {
     private final MusicBandCollection collection;
 
     public RemoveHeadCommand(MusicBandCollection collection) {
@@ -12,11 +15,11 @@ public class RemoveHeadCommand implements lab6.lab.common.commands.Command {
 
     @Override
     public void execute(String argument) {
-        MusicBand removedBand = collection.removeHead();
-        if (removedBand != null) {
-            System.out.println("Удален первый элемент: " + removedBand);
-        } else {
+        MusicBand head = collection.removeHead();
+        if (head == null) {
             System.out.println("Коллекция пуста.");
+        } else {
+            System.out.println("Удалена первая группа: " + head);
         }
     }
 }

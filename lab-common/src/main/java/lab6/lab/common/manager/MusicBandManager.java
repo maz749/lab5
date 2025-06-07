@@ -1,36 +1,47 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package lab6.lab.common.manager;
 
-import java.io.BufferedReader;
-import java.util.List;
 import lab6.lab.common.models.MusicBand;
 
+import java.sql.SQLException;
+import java.util.List;
+
 public class MusicBandManager {
-    private final MusicBandCollection collection = new MusicBandCollection();
-    private final FileStorage storage = new FileStorage(new MusicBandFactory());
+    private final MusicBandCollection collection;
+    private final DatabaseManager dbManager;
     private final CommandExecutor executor;
 
-    public MusicBandManager() {
-        this.executor = new CommandExecutor(this.collection, this.storage);
+
+    public MusicBandManager() throws SQLException {
+        this.collection = new MusicBandCollection();
+        this.dbManager = new DatabaseManager(collection);
+        this.executor = new CommandExecutor(collection, dbManager);
+        dbManager.loadCollection();
     }
 
-    public void loadFromFile(String fileName) {
-        this.storage.loadFromFile(fileName, this.collection);
+    public MusicBandManager(MusicBandCollection collection) throws SQLException {
+        this.collection = collection;
+        this.dbManager = new DatabaseManager(collection);
+        this.executor = new CommandExecutor(collection, dbManager);
+        dbManager.loadCollection();
     }
 
     public void executeCommand(String commandLine) {
-        this.executor.executeCommand(commandLine, (BufferedReader)null);
+        executor.executeCommand(commandLine, null);
     }
 
     public List<MusicBand> getMusicBands() {
-        return this.collection.getMusicBands();
+        return collection.getMusicBands();
     }
 
     public CommandExecutor getExecutor() {
-        return this.executor;
+        return executor;
+    }
+
+    public DatabaseManager getDbManager() {
+        return dbManager;
+    }
+
+    public MusicBandCollection getCollection() {
+        return collection;
     }
 }

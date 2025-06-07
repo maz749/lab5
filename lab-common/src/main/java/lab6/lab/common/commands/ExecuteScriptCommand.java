@@ -10,54 +10,45 @@ import java.util.Set;
 
 public class ExecuteScriptCommand implements Command {
     private final CommandExecutor executor;
-    private final Set<String> executedScripts;
-    private static final int MAX_RECURSION_DEPTH = 10;
-    private static int currentRecursionDepth = 0;
+    private final Set<String> executingScripts;
 
     public ExecuteScriptCommand(CommandExecutor executor) {
         this.executor = executor;
-        this.executedScripts = new HashSet<>();
+        this.executingScripts = new HashSet<>();
     }
 
     @Override
-    public void execute(String fileName) {
-        System.out.println("Команда execute_script должна выполняться на клиенте.");
+    public void execute(String argument) {
+        System.out.println("Команда execute_script требует имя файла.");
     }
 
-    public void execute(String fileName, BufferedReader reader, Object context) {
+    public void execute(String fileName, BufferedReader mainReader, String[] auth) throws IOException {
         if (fileName == null || fileName.trim().isEmpty()) {
             System.out.println("Ошибка: Не указано имя файла скрипта.");
             return;
         }
-
-        if (currentRecursionDepth >= MAX_RECURSION_DEPTH) {
-            System.out.println("Ошибка: Достигнута максимальная глубина рекурсии (" + MAX_RECURSION_DEPTH + ").");
+        if (executingScripts.contains(fileName)) {
+            System.out.println("Ошибка: Скрипт " + fileName + " уже выполняется (рекурсия обнаружена).");
             return;
         }
-
-        if (executedScripts.contains(fileName)) {
-            System.out.println("Скрипт " + fileName + " уже выполняется. Прерывание для предотвращения рекурсии.");
-            return;
-        }
-
-        executedScripts.add(fileName);
-        currentRecursionDepth++;
-        System.out.println("Начало выполнения скрипта: " + fileName);
-
-        try (BufferedReader fileReader = new BufferedReader(new FileReader(fileName))) {
+        executingScripts.add(fileName);
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
-            while ((line = fileReader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 line = line.trim();
                 if (line.isEmpty()) continue;
-                System.out.println("Выполняется команда: " + line);
-                executor.executeCommand(line, fileReader);
+                if (line.toLowerCase().startsWith("execute_script")) {
+                    System.out.println("Ошибка: Вложенные вызовы execute_script не поддерживаются.");
+                    continue;
+                }
+                System.out.println("Выполняется: " + line);
+                executor.executeCommand(line, reader);
             }
+            System.out.println("Скрипт " + fileName + " выполнен.");
         } catch (IOException e) {
-            System.out.println("Ошибка при выполнении скрипта: " + e.getMessage());
+            System.out.println("Ошибка при выполнении скрипта " + fileName + ": " + e.getMessage());
         } finally {
-            executedScripts.remove(fileName);
-            currentRecursionDepth--;
-            System.out.println("Завершение выполнения скрипта: " + fileName);
+            executingScripts.remove(fileName);
         }
     }
 }

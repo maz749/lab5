@@ -1,43 +1,32 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package lab6.lab.server;
 
-import java.io.File;
-
 public class Main {
-    public Main() {
-    }
-
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Ошибка: Для режима 'server' требуется имя файла данных.");
+        int port = 5001; // Порт по умолчанию, соответствует клиенту
+        if (args.length == 1) {
+            try {
+                port = Integer.parseInt(args[0]);
+            } catch (NumberFormatException e) {
+                System.out.println("Ошибка: Порт должен быть числом.");
+                System.exit(1);
+            }
+        } else if (args.length > 1) {
+            System.out.println("Ошибка: Укажите только порт.");
             printUsage();
             System.exit(1);
         }
 
-        String filename = args[0];
-        File file = new File(filename);
-        if (!file.exists() || !file.canRead()) {
-            System.out.println("Ошибка: Файл " + filename + " не существует или недоступен для чтения.");
-            System.exit(1);
-        }
-
         try {
-            Server server = new Server(filename);
+            Server server = new Server(port);
             server.start();
-        } catch (Exception var4) {
-            Exception e = var4;
+        } catch (Exception e) {
             System.out.println("Ошибка при запуске сервера: " + e.getMessage());
             System.exit(1);
         }
-
     }
 
     private static void printUsage() {
-        System.out.println("Использование: java -jar lab-server.jar <имя_файла>");
-        System.out.println("  <имя_файла> - Файл для хранения данных");
+        System.out.println("Использование: java -jar lab-server.jar [порт]");
+        System.out.println("  порт - Номер порта для сервера (по умолчанию 5001)");
     }
 }
