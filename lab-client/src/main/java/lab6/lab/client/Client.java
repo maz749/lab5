@@ -4,7 +4,6 @@ import lab6.lab.common.CommandRequest;
 import lab6.lab.common.CommandResponse;
 import lab6.lab.common.manager.CommandExecutor;
 import lab6.lab.common.manager.MusicBandCollection;
-import lab6.lab.common.manager.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,10 +29,11 @@ public class Client {
     private String username;
     private String password;
 
-    public Client() throws SQLException {
+    public Client() {
         this.commandParser = new CommandParser();
         this.responseHandler = new ResponseHandler();
-        this.commandExecutor = new CommandExecutor(new MusicBandCollection(), new DatabaseManager(new MusicBandCollection()));
+        this.commandExecutor = new CommandExecutor(new MusicBandCollection(), null);
+        logger.info("Client initialized");
     }
 
     public void start() {

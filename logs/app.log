@@ -128,3 +128,12 @@
 2025-06-07 00:02:14 [main] ERROR lab6.lab.server.Server - Failed to initialize MusicBandManager: PostgreSQL Driver not found
 2025-06-07 00:55:27 [main] ERROR lab6.lab.common.manager.DatabaseManager - PostgreSQL Driver not found: org.postgresql.Driver
 2025-06-07 00:55:27 [main] ERROR lab6.lab.server.Server - Failed to initialize MusicBandManager: PostgreSQL Driver not found
+2025-06-10 23:26:01 [main] INFO  lab6.lab.common.manager.MusicBandCollection - MusicBandCollection initialized at 2025-06-10T23:26:01.379798500
+2025-06-10 23:26:01 [main] INFO  lab6.lab.common.database.DatabaseConnectionManager - PostgreSQL Driver registered successfully
+2025-06-10 23:26:04 [main] ERROR lab6.lab.common.database.DatabaseConnectionManager - Failed to establish database connection: Ошибка при попытке подсоединения.
+2025-06-10 23:26:04 [main] ERROR lab6.lab.server.Server - Failed to initialize database: Ошибка при попытке подсоединения.
+2025-06-10 23:26:25 [main] INFO  lab6.lab.common.manager.MusicBandCollection - MusicBandCollection initialized at 2025-06-10T23:26:25.329764200
+2025-06-10 23:26:25 [main] INFO  lab6.lab.common.manager.CommandExecutor - Commands registered. Total commands: 16
+2025-06-10 23:26:25 [main] INFO  lab6.lab.client.Client - Client initialized
+2025-06-10 23:26:25 [main] INFO  lab6.lab.client.Client - Client started.
+2025-06-10 23:26:30 [main] WARN  lab6.lab.client.Client - User not logged in for command: help

@@ -1,6 +1,9 @@
 package lab6.lab.common.commands;
 
 import lab6.lab.common.manager.CommandExecutor;
+import lab6.lab.common.CommandResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ExecuteScriptCommand implements Command {
+    private static final Logger logger = LogManager.getLogger(ExecuteScriptCommand.class);
     private final CommandExecutor executor;
     private final Set<String> executingScripts;
 
@@ -18,37 +22,44 @@ public class ExecuteScriptCommand implements Command {
     }
 
     @Override
-    public void execute(String argument) {
-        System.out.println("Команда execute_script требует имя файла.");
-    }
+    public void execute(String argument, Object object) {
+        if (argument == null || argument.trim().isEmpty()) {
+            logger.error("Script filename required for execute_script command");
+            throw new IllegalArgumentException("Script filename required for execute_script command");
+        }
 
-    public void execute(String fileName, BufferedReader mainReader, String[] auth) throws IOException {
-        if (fileName == null || fileName.trim().isEmpty()) {
-            System.out.println("Ошибка: Не указано имя файла скрипта.");
-            return;
-        }
+        String fileName = argument.trim();
         if (executingScripts.contains(fileName)) {
-            System.out.println("Ошибка: Скрипт " + fileName + " уже выполняется (рекурсия обнаружена).");
-            return;
+            logger.error("Recursive script execution detected: {}", fileName);
+            throw new IllegalStateException("Recursive script execution detected: " + fileName);
         }
-        executingScripts.add(fileName);
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                line = line.trim();
-                if (line.isEmpty()) continue;
-                if (line.toLowerCase().startsWith("execute_script")) {
-                    System.out.println("Ошибка: Вложенные вызовы execute_script не поддерживаются.");
-                    continue;
+
+        try {
+            executingScripts.add(fileName);
+            logger.info("Executing script: {}", fileName);
+            try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (!line.trim().isEmpty()) {
+                        logger.debug("Executing command from script: {}", line);
+                        executor.executeCommand(line, reader);
+                    }
                 }
-                System.out.println("Выполняется: " + line);
-                executor.executeCommand(line, reader);
             }
-            System.out.println("Скрипт " + fileName + " выполнен.");
+            logger.info("Script execution completed: {}", fileName);
         } catch (IOException e) {
-            System.out.println("Ошибка при выполнении скрипта " + fileName + ": " + e.getMessage());
+            logger.error("Error reading script file {}: {}", fileName, e.getMessage());
+            throw new RuntimeException("Error reading script file: " + e.getMessage(), e);
+        } catch (Exception e) {
+            logger.error("Error executing script {}: {}", fileName, e.getMessage());
+            throw new RuntimeException("Error executing script: " + e.getMessage(), e);
         } finally {
             executingScripts.remove(fileName);
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return "execute commands from a script file";
     }
 }

@@ -2,6 +2,7 @@ package lab6.lab.common.manager;
 
 import lab6.lab.common.commands.*;
 import lab6.lab.common.CommandRequest;
+import lab6.lab.common.database.MusicBandRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,57 +14,50 @@ public class CommandExecutor {
     private static final Logger logger = LogManager.getLogger(CommandExecutor.class);
     private final Map<String, Command> commands;
 
-    public CommandExecutor(MusicBandCollection collection, DatabaseManager dbManager) {
+    public CommandExecutor(MusicBandCollection collection, MusicBandRepository musicBandRepository) {
         this.commands = new HashMap<>();
-        registerCommands(collection, dbManager);
-        logger.info("Команды зарегистрированы. Всего команд: {}", commands.size());
+        registerCommands(collection, musicBandRepository);
+        logger.info("Commands registered. Total commands: {}", commands.size());
     }
 
-    private void registerCommands(MusicBandCollection collection, DatabaseManager dbManager) {
-        commands.put("add", new AddCommand(collection));
-        commands.put("add_if_max", new AddIfMaxCommand(collection));
-        commands.put("remove_by_id", new RemoveByIdCommand(collection));
-        commands.put("clear", new ClearCommand(collection));
-        commands.put("execute_script", new ExecuteScriptCommand(this));
-        commands.put("filter_by_number_of_participants", new FilterByNumberOfParticipantsCommand(collection));
+    private void registerCommands(MusicBandCollection collection, MusicBandRepository musicBandRepository) {
         commands.put("help", new HelpCommand());
         commands.put("info", new InfoCommand(collection));
-        commands.put("max_by_name", new MaxByNameCommand(collection));
-        commands.put("remove_any_by_description", new RemoveAnyByDescriptionCommand(collection));
-        commands.put("remove_head", new RemoveHeadCommand(collection));
-        commands.put("remove_lower", new RemoveLowerCommand(collection));
         commands.put("show", new ShowCommand(collection));
-        commands.put("update", new UpdateCommand(collection));
-        commands.put("insert_at", new InsertAtCommand(collection));
-        commands.put("sort", new SortCommand(collection));
+        commands.put("add", new AddCommand(collection, musicBandRepository));
+        commands.put("update", new UpdateCommand(collection, musicBandRepository));
+        commands.put("remove_by_id", new RemoveByIdCommand(collection, musicBandRepository));
+        commands.put("clear", new ClearCommand(collection, musicBandRepository));
+        commands.put("execute_script", new ExecuteScriptCommand(this));
+        commands.put("add_if_max", new AddIfMaxCommand(collection, musicBandRepository));
+        commands.put("remove_lower", new RemoveLowerCommand(collection, musicBandRepository));
         commands.put("history", new HistoryCommand());
+        commands.put("remove_head", new RemoveHeadCommand(collection));
+        commands.put("remove_any_by_description", new RemoveAnyByDescriptionCommand(collection));
+        commands.put("max_by_name", new MaxByNameCommand(collection));
         commands.put("average_of_number_of_participants", new AverageOfNumberOfParticipantsCommand(collection));
-        commands.put("filter_greater_than_number_of_participants", new FilterGreaterThanNumberOfParticipantsCommand(collection));
-        commands.put("login", new LoginCommand(dbManager));
-        commands.put("register", new RegisterCommand(dbManager));
+        commands.put("filter_by_number_of_participants", new FilterByNumberOfParticipantsCommand(collection));
+    }
+
+    public void executeCommand(CommandRequest request) {
+        String commandName = request.getCommandName().toLowerCase();
+        Command command = commands.get(commandName);
+        if (command != null) {
+            command.execute(request.getArgument(), request.getObject());
+        } else {
+            logger.error("Unknown command: {}", commandName);
+            throw new IllegalArgumentException("Unknown command: " + commandName);
+        }
+    }
+
+    public String getHelp() {
+        StringBuilder help = new StringBuilder("Available commands:\n");
+        commands.forEach((name, command) -> help.append(name).append(": ").append(command.getDescription()).append("\n"));
+        return help.toString();
     }
 
     public Map<String, Command> getCommands() {
         return commands;
-    }
-
-    public void executeCommand(CommandRequest request) {
-        String cmd = request.getCommandName().toLowerCase();
-        Command command = commands.get(cmd);
-        if (command == null) {
-            logger.warn("Попытка выполнить неизвестную команду: {}", cmd);
-            throw new IllegalArgumentException("Неизвестная команда: " + cmd);
-        }
-
-        logger.info("Выполнение команды: {}", cmd);
-        HistoryCommand.addToHistory(cmd);
-        try {
-            command.execute(request.getArgument());
-            logger.debug("Команда {} выполнена успешно", cmd);
-        } catch (Exception e) {
-            logger.error("Ошибка при выполнении команды {}: {}", cmd, e.getMessage());
-            throw new RuntimeException("Ошибка выполнения команды " + cmd + ": " + e.getMessage(), e);
-        }
     }
 
     public void executeCommand(String commandLine, BufferedReader reader) {
@@ -82,9 +76,9 @@ public class CommandExecutor {
         HistoryCommand.addToHistory(cmd);
         try {
             if (cmd.equals("execute_script")) {
-                ((ExecuteScriptCommand) command).execute(argument, reader, null);
+                ((ExecuteScriptCommand) command).execute(argument, reader);
             } else {
-                command.execute(argument, reader);
+                command.execute(argument, null);
             }
             logger.debug("Команда {} выполнена успешно", cmd);
         } catch (Exception e) {

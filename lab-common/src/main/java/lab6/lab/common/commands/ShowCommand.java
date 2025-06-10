@@ -17,15 +17,15 @@ public class ShowCommand implements Command {
     }
 
     @Override
-    public void execute(String argument) {
+    public void execute(String argument, Object object) {
         List<MusicBand> bands = collection.getMusicBands();
         logger.debug("Show command: retrieved {} bands", bands.size());
         bands.forEach(band -> logger.debug("Band: id={}, name={}, user_id={}", band.getId(), band.getName(), band.getUserId()));
         if (bands.isEmpty()) {
-            logger.info("Collection is empty.");
+            logger.info("Collection is empty");
             System.out.println("Коллекция пуста.");
         } else {
-            logger.info("Showing {} music bands.", bands.size());
+            logger.info("Showing {} music bands", bands.size());
             bands.forEach(System.out::println);
         }
     }
@@ -35,11 +35,16 @@ public class ShowCommand implements Command {
         logger.debug("Show command: retrieved {} bands", bands.size());
         bands.forEach(band -> logger.debug("Band: id={}, name={}, user_id={}", band.getId(), band.getName(), band.getUserId()));
         if (bands.isEmpty()) {
-            logger.info("Collection is empty.");
+            logger.info("Collection is empty");
             return new CommandResponse("Collection is empty.", null, true);
         } else {
-            logger.info("Returning {} music bands.", bands.size());
+            logger.info("Returning {} music bands", bands.size());
             return new CommandResponse("Music bands in collection:", bands, true);
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return "show all music bands in the collection";
     }
 }

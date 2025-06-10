@@ -11,7 +11,7 @@ public class HelpCommand implements Command {
     private static final Logger logger = LogManager.getLogger(HelpCommand.class);
 
     @Override
-    public void execute(String argument) {
+    public void execute(String argument, Object object) {
         List<String> commandList = getCommandList();
         logger.info("Executing help command, displaying {} commands.", commandList.size());
         System.out.println("Доступные команды:");
@@ -43,10 +43,15 @@ public class HelpCommand implements Command {
                 "remove_any_by_description description - Удалить одну группу с указанным описанием.",
                 "remove_by_id id - Удалить группу по ID.",
                 "remove_head - Удалить первую группу в коллекции.",
-                "remove_lower {element} - Удалить группы с меньшим количеством участников.",
+                "remove_lower {element} - Удалить все группы с меньшим количеством участников.",
                 "show - Показать все группы в коллекции.",
-                "sort - Отсортировать коллекцию.",
-                "update id {element} - Обновить группу с указанным ID."
+                "sort - Отсортировать коллекцию по имени.",
+                "update id {element} - Обновить группу по ID."
         );
+    }
+
+    @Override
+    public String getDescription() {
+        return "show the list of available commands";
     }
 }
